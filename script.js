@@ -1,6 +1,6 @@
 const users = {
-  admin: "password123",
-  kv: "goatedgen",
+  admin: "admin",
+  user: "pass",
   // add your usernames and passwords here
 };
 
