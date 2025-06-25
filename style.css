@@ -1,4 +1,4 @@
-/* Body and common styles */
+/* BODY & COMMON */
 body {
   margin: 0;
   padding: 0;
@@ -11,7 +11,7 @@ body {
   min-height: 100vh;
 }
 
-/* Logo */
+/* LOGO */
 .logo {
   margin-top: 40px;
   margin-bottom: 60px;
@@ -21,7 +21,7 @@ body {
   max-width: 90%;
 }
 
-/* Card container and cards */
+/* CARD CONTAINER & CARDS */
 .card-container {
   display: flex;
   flex-wrap: wrap;
@@ -84,7 +84,13 @@ body {
   transform: scale(1.05);
 }
 
-/* Logout button */
+/* LINKS */
+.card-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* LOGOUT BUTTON */
 .logout-btn {
   margin: 30px 0 60px 0;
   padding: 12px 25px;
@@ -101,7 +107,7 @@ body {
   background: #a24ff4;
 }
 
-/* Login page specific styles */
+/* LOGIN PAGE */
 .login-wrapper {
   min-height: 100vh;
   background-color: #111;
