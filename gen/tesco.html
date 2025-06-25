@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tesco Barcode Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #003478;
+      background-image: linear-gradient(45deg, #003478 25%, #002c63 25%, #002c63 50%, #003478 50%, #003478 75%, #002c63 75%, #002c63);
+      background-size: 40px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .container {
+      background-color: #ffffff;
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+      box-shadow: 0 0 20px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    .tesco-logo {
+      max-width: 120px;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      color: #003478;
+      font-weight: normal;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+      color: #e31837;
+      margin: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
+      border: 2px solid #003478;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #003478;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #002a61;
+    }
+
+    canvas {
+      margin-top: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background: #fff;
+      width: 380px;
+      height: 200px;
+      image-rendering: pixelated;
+    }
+
+    .notice {
+      color: red;
+      font-size: 14px;
+      margin-top: 0.5rem;
+    }
+
+    a {
+      display: block;
+      margin-top: 1rem;
+      color: #e31837;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding: 1.5rem 1rem;
+      }
+
+      h1 {
+        font-size: 1.25rem;
+      }
+
+      input, button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img class="tesco-logo" src="https://www.logo.wine/a/logo/Tesco/Tesco-Logo.wine.svg" alt="Tesco Logo" />
+    <h1>Tesco Barcode Generator</h1>
+    <h2>made by @shark.net</h2>
+
+    <input type="text" id="userInput" placeholder="Enter product number..." />
+    <input type="text" id="productName" placeholder="Optional product name..." />
+
+    <button onclick="generateBarcode()">Generate Barcode</button>
+    <div class="notice">makes them 5p</div>
+
+    <canvas id="barcodeCanvas" width="1140" height="600"></canvas>
+
+    <a href="https://discord.gg/SuVMU2T9qK" target="_blank">https://discord.gg/SuVMU2T9qK</a>
+
+    <button onclick="downloadBarcode()">Download as PNG</button>
+  </div>
+
+  <script>
+    function generateBarcode() {
+      const input = document.getElementById('userInput').value.trim();
+      const name = document.getElementById('productName').value.trim();
+      const canvas = document.getElementById('barcodeCanvas');
+      const ctx = canvas.getContext('2d');
+
+      if (!input.match(/^\d+$/)) {
+        alert("Only digits allowed in the number field!");
+        return;
+      }
+
+      const fullCode = '971' + input + '70000507';
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const temp = document.createElement('canvas');
+      temp.width = 1000;
+      temp.height = 400;
+
+      JsBarcode(temp, fullCode, {
+        format: "CODE128",
+        lineColor: "#000",
+        width: 4,
+        height: 300,
+        displayValue: true,
+        font: "Arial", // ← clean fallback font for barcode text
+        fontSize: 60,
+        margin: 20
+      });
+
+      const x = (canvas.width - temp.width) / 2;
+      const y = (canvas.height - temp.height) / 2 - 20;
+
+      ctx.drawImage(temp, x, y);
+
+      if (name) {
+        ctx.font = "bold 80px Arial";
+        ctx.fillStyle = "#e31837";
+        ctx.textAlign = "center";
+        ctx.fillText(name, canvas.width / 2, canvas.height - 80);
+      }
+    }
+
+    function downloadBarcode() {
+      const name = document.getElementById('productName').value.trim();
+      const canvas = document.getElementById('barcodeCanvas');
+      const link = document.createElement('a');
+      link.download = (name ? name.replace(/[^a-z0-9]/gi, '_').toLowerCase() : 'tesco_barcode') + '.png';
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    }
+  </script>
+
+</body>
+</html>
