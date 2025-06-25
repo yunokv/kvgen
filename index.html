@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Login | Generator Hub</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Hexio</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="login-container">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button onclick="login()">Login</button>
-    <p id="error-msg"></p>
+  <div class="login-wrapper">
+    <div class="logo">
+      <img src="https://i.postimg.cc/sDcYy6FJ/Hexio.png" alt="Hexio Logo" />
+    </div>
+
+    <div class="login-container">
+      <h2>Login to Hexio</h2>
+      <input type="text" id="username" placeholder="Username" autocomplete="off" autofocus />
+      <input type="password" id="password" placeholder="Password" autocomplete="off" />
+      <button onclick="login()">Login</button>
+      <p id="error-msg"></p>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
