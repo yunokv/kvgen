@@ -1,33 +1,33 @@
-// Hardcoded logins (you can edit these usernames/passwords)
 const users = {
-  "admin": "password123",
-  "kv": "goatedgen"
+  admin: "password123",
+  kv: "goatedgen",
+  // add more logins here
 };
 
-// Login logic
+// Login function
 function login() {
-  const user = document.getElementById('username').value;
-  const pass = document.getElementById('password').value;
-  const error = document.getElementById('error-msg');
+  const user = document.getElementById("username").value.trim();
+  const pass = document.getElementById("password").value.trim();
+  const error = document.getElementById("error-msg");
 
   if (users[user] && users[user] === pass) {
     localStorage.setItem("loggedIn", "true");
     localStorage.setItem("user", user);
-    window.location.href = "index.html";
+    window.location.href = "dashboard.html"; // Redirect after login
   } else {
     error.textContent = "Invalid username or password.";
   }
 }
 
-// Logout logic
-function logout() {
-  localStorage.clear();
-  window.location.href = "login.html";
+// Check auth on dashboard page load
+if (window.location.pathname.endsWith("dashboard.html")) {
+  if (localStorage.getItem("loggedIn") !== "true") {
+    window.location.href = "index.html"; // Redirect to login if not logged in
+  }
 }
 
-// Redirect to login if not logged in (only for index.html)
-if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
-  if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "login.html";
-  }
+// Logout function
+function logout() {
+  localStorage.clear();
+  window.location.href = "index.html";
 }
