@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Waitrose Barcode Generator</title>
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    :root {
+      --lime: #73bf44;
+      --lime-dark: #5ca836;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #73bf44;
+      background-image: linear-gradient(45deg, #73bf44 25%, #5ca836 25%, #5ca836 50%, #73bf44 50%, #73bf44 75%, #5ca836 75%, #5ca836);
+      background-size: 40px 40px;
+      color: #222;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: var(--lime-dark);
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid var(--lime);
+      border-radius: 10px;
+      outline: none;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      padding: 10px 18px;
+      font-size: 15px;
+      border: none;
+      border-radius: 8px;
+      background: var(--lime);
+      color: white;
+      cursor: pointer;
+      margin: 6px 4px;
+      transition: 0.2s;
+    }
+
+    button:hover {
+      background: var(--lime-dark);
+    }
+
+    #displayText {
+      width: 100%;
+      margin-top: 12px;
+      padding: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 14px;
+      border: 1.5px solid var(--lime);
+      border-radius: 8px;
+      background: #f9f9f9;
+      color: #222;
+      min-height: 50px;
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    svg {
+      margin-top: 20px;
+      background: #f2f2f2;
+      border-radius: 10px;
+      padding: 10px;
+      max-width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Waitrose Barcode Generator</h1>
+    <input id="inputNum" type="text" placeholder="Enter barcode number" />
+    <input id="inputPrice" type="number" min="1" max="99" placeholder="Enter price (1-99)" />
+    <div>
+      <button onclick="generateBarcode()">Generate</button>
+      <button onclick="downloadSVG()">Download</button>
+    </div>
+
+    <div id="displayText">Made by @fck.rqtz</div>
+
+    <svg id="barcode"></svg>
+  </div>
+
+  <script>
+    const input = document.getElementById("inputNum");
+    const priceInput = document.getElementById("inputPrice");
+    const svg = document.getElementById("barcode");
+
+    input.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") generateBarcode();
+    });
+    priceInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") generateBarcode();
+    });
+
+    function generateBarcode() {
+      const raw = input.value.trim();
+      if (!/^\d+$/.test(raw)) {
+        alert("Only numbers allowed in product number.");
+        return;
+      }
+
+      let price = parseInt(priceInput.value, 10);
+      if (isNaN(price) || price < 1 || price > 99) {
+        alert("Price must be a number between 1 and 99 (pence).");
+        return;
+      }
+
+      let priceCode = price.toString().padStart(2, '0');
+
+      const full = `10${raw}000${priceCode}`;
+
+      svg.innerHTML = '';
+
+      JsBarcode(svg, full, {
+        format: "CODE128",
+        lineColor: "#000000",
+        background: "#ffffff",
+        width: 2,
+        height: 100,
+        displayValue: true,
+        fontOptions: "bold",
+        font: "monospace",
+        textMargin: 5
+      });
+    }
+
+    function downloadSVG() {
+      const xml = new XMLSerializer().serializeToString(svg);
+      const svg64 = btoa(xml);
+      const imgSrc = 'data:image/svg+xml;base64,' + svg64;
+
+      const image = new Image();
+      image.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = image.width * 3;
+        canvas.height = image.height * 3;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(3, 3);
+        ctx.drawImage(image, 0, 0);
+        const png = canvas.toDataURL("image/png");
+
+        const link = document.createElement('a');
+        link.download = "barcode.png";
+        link.href = png;
+        link.click();
+      };
+      image.src = imgSrc;
+    }
+  </script>
+</body>
+</html>
