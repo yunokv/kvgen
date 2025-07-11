@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hexio Generator Hub</title>
-  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
       --primary: #8e44ad;
@@ -14,29 +15,31 @@
 
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
     body {
-      margin: 0;
       background: linear-gradient(135deg, #0d0d0d, #1a001a);
       font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 2rem 1rem;
       min-height: 100vh;
-      color: #fff;
     }
 
     .logo img {
-      max-width: 200px;
+      max-width: 160px;
+      width: 100%;
       margin-bottom: 2rem;
     }
 
     .card-container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
       width: 100%;
       max-width: 900px;
     }
@@ -48,43 +51,63 @@
     .gen-card {
       background: var(--card);
       border-radius: 16px;
-      padding: 1.5rem 1rem;
+      padding: 1.2rem 1rem;
       text-align: center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      transition: 0.2s ease;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .gen-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 10px 25px rgba(189, 147, 249, 0.3);
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(189, 147, 249, 0.3);
     }
 
     .card-img {
-      width: 64px;
-      height: 64px;
-      margin-bottom: 1rem;
+      width: 56px;
+      height: 56px;
+      margin-bottom: 0.75rem;
     }
 
     h2 {
       color: var(--accent);
-      font-size: 1.2rem;
-      margin: 0;
+      font-size: 1rem;
     }
 
     .logout-btn {
       margin-top: 3rem;
       background: var(--primary);
       color: white;
-      padding: 10px 22px;
-      font-size: 14px;
+      padding: 0.7rem 1.6rem;
+      font-size: 0.9rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       transition: background 0.2s ease;
     }
 
     .logout-btn:hover {
       background: #722e91;
+    }
+
+    @media (max-width: 500px) {
+      body {
+        padding: 1.5rem 0.8rem;
+      }
+
+      h2 {
+        font-size: 0.95rem;
+      }
+
+      .card-img {
+        width: 48px;
+        height: 48px;
+      }
+
+      .logout-btn {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        padding: 0.6rem 1.4rem;
+      }
     }
   </style>
 </head>
@@ -96,25 +119,25 @@
   <div class="card-container">
     <a href="gen/sain.html" class="card-link">
       <div class="gen-card">
-        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Hexio Icon" class="card-img" />
+        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Sainsbury's Icon" class="card-img" />
         <h2>Sainsbury's</h2>
       </div>
     </a>
     <a href="gen/morri.html" class="card-link">
       <div class="gen-card">
-        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Hexio Icon" class="card-img" />
+        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Morrisons Icon" class="card-img" />
         <h2>Morrisons</h2>
       </div>
     </a>
     <a href="gen/tesco.html" class="card-link">
       <div class="gen-card">
-        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Hexio Icon" class="card-img" />
+        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Tesco Icon" class="card-img" />
         <h2>Tesco</h2>
       </div>
     </a>
     <a href="gen/waitrose.html" class="card-link">
       <div class="gen-card">
-        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Hexio Icon" class="card-img" />
+        <img src="https://i.postimg.cc/g0DxwDbH/hexio-1.png" alt="Waitrose Icon" class="card-img" />
         <h2>Waitrose</h2>
       </div>
     </a>
